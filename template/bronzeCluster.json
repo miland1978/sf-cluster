@@ -248,6 +248,7 @@
         }
     },
     "variables": {
+        // "customData": "[concat('#include\n', uri(parameters('_artifactsLocation'), concat('primary-node-config.yml', parameters('_artifactsLocationSasToken'))))]",
         "vmssApiVersion": "2017-03-30",
         "sfrpApiVersion": "2018-02-01",
         "lbApiVersion": "2015-06-15",
@@ -268,8 +269,7 @@
         "lbHttpProbeID0": "[concat(variables('lbID0'),'/probes/FabricHttpGatewayProbe')]",
         "lbNatPoolID0": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]",
         "vmStorageAccountName0": "[toLower(concat(uniqueString(resourceGroup().id), '1', '0' ))]",
-        "wadmetricsresourceid0": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name ,'/providers/','Microsoft.Compute/virtualMachineScaleSets/', parameters('vmNodeType0Name'))]",
-        "customData": "[concat('#include\n', uri(parameters('_artifactsLocation'), concat('primary-node-config.yml', parameters('_artifactsLocationSasToken'))))]"
+        "wadmetricsresourceid0": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name ,'/providers/','Microsoft.Compute/virtualMachineScaleSets/', parameters('vmNodeType0Name'))]"
     },
     "resources": [
         {
@@ -511,6 +511,21 @@
                                     },
                                     "typeHandlerVersion": "2.3"
                                 }
+                            },
+                            {
+                                "name": "[concat(parameters('vmNodeType0Name'),'_CustomScript')]",
+                                "properties": {
+                                    "publisher": "Microsoft.Azure.Extensions",
+                                    "type": "CustomScript",
+                                    "typeHandlerVersion": "2.0",
+                                    "autoUpgradeMinorVersion": true,
+                                    "settings": {
+                                        "skipDos2Unix": false,
+                                        "timestamp": 20190519,
+                                        "commandToExecute": "add-apt-repository -y ppa:ethereum/ethereum && apt-get -y update && apt-get install -y ethereum"
+                                    },
+                                    "protectedSettings": {}
+                                }
                             }
                         ]
                     },
@@ -547,7 +562,7 @@
                     "osProfile": {
                         "adminPassword": "[parameters('adminPassword')]",
                         "adminUsername": "[parameters('adminUsername')]",
-                        "customData": "[base64(variables('customData'))]",
+                        //"customData": "[base64(variables('customData'))]",
                         "computernamePrefix": "[parameters('vmNodeType0Name')]",
                         "secrets": [
                             {
