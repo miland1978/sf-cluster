@@ -50,10 +50,10 @@ function EnsureCertificateCreated([string]$CertName) {
         $cert = New-SelfSignedCertificate -DnsName $CertName -CertStoreLocation cert:\CurrentUser\My -KeySpec KeyExchange
         $thumbprint = $cert.Thumbprint
         $certContent = (Get-ChildItem -Path Cert:\CurrentUser\My\$thumbprint)
-        Export-PfxCertificate -Cert $certContent -FilePath $certFilename -Password $securePassword
+        $filename = Export-PfxCertificate -Cert $certContent -FilePath $certFilename -Password $securePassword
         Set-Content -Path "$CertName.thumb.txt" -Value $thumbprint
         Set-Content -Path "$CertName.pwd.txt" -Value "$password"
-        Write-Host "New certificate stored to '$certFilename'"
+        Write-Host "New certificate stored to '$filename'"
     }
 
     $certFilename
@@ -69,7 +69,7 @@ function EnsureCertificateImported([string]$CertName, [string]$VaultName) {
     $cert = Get-AzureKeyVaultCertificate -VaultName $VaultName -Name $CertName -ErrorAction Ignore
     if ($null -eq $cert) {
         Write-Host "Certificate '$CertName' not found in key vault '$VaultName'. Importing..."
-        $trash, $certFilename, $password = EnsureCertificateCreated $CertName
+        $certFilename, $password = EnsureCertificateCreated $CertName
         $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
         $cert = Import-AzureKeyVaultCertificate -VaultName $VaultName -Name $CertName -FilePath $certFilename -Password $securePassword
         Write-Host "Certificate '$CertName' imported to key vault '$VaultName'."
