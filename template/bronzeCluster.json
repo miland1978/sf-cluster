@@ -239,6 +239,12 @@
         "vmNodeType0Size": {
             "type": "string",
             "defaultValue": "Standard_D2s_v3"
+        },
+        "_artifactsLocation": {
+            "type": "string"
+        },
+        "_artifactsLocationSasToken": {
+            "type": "securestring"
         }
     },
     "variables": {
@@ -262,7 +268,8 @@
         "lbHttpProbeID0": "[concat(variables('lbID0'),'/probes/FabricHttpGatewayProbe')]",
         "lbNatPoolID0": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]",
         "vmStorageAccountName0": "[toLower(concat(uniqueString(resourceGroup().id), '1', '0' ))]",
-        "wadmetricsresourceid0": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name ,'/providers/','Microsoft.Compute/virtualMachineScaleSets/', parameters('vmNodeType0Name'))]"
+        "wadmetricsresourceid0": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name ,'/providers/','Microsoft.Compute/virtualMachineScaleSets/', parameters('vmNodeType0Name'))]",
+        "customData": "[concat('#include\n', uri(parameters('_artifactsLocation'), concat('primary-node-config.yml', parameters('_artifactsLocationSasToken'))))]"
     },
     "resources": [
         {
@@ -540,6 +547,7 @@
                     "osProfile": {
                         "adminPassword": "[parameters('adminPassword')]",
                         "adminUsername": "[parameters('adminUsername')]",
+                        "customData": "[base64(variables('customData'))]",
                         "computernamePrefix": "[parameters('vmNodeType0Name')]",
                         "secrets": [
                             {

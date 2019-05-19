@@ -1,0 +1,19 @@
+#cloud-config
+
+users:
+  - name: ethereum
+    gecos: Ethereum
+    sudo: None
+    lock_passwd: true
+
+apt:
+  sources:
+    ethereum-ppa.list:
+      source: 'ppa:ethereum/ethereum'
+      keyid: 923F6CA9
+
+package_update: true
+
+packages:
+ - ethereum
+ 
