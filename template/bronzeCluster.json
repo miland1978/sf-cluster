@@ -249,7 +249,7 @@
     },
     "variables": {
         // "customData": "[concat('#include\n', uri(parameters('_artifactsLocation'), concat('primary-node-config.yml', parameters('_artifactsLocationSasToken'))))]",
-        "vmssApiVersion": "2017-03-30",
+        "vmssApiVersion": "2019-03-01",
         "sfrpApiVersion": "2018-02-01",
         "lbApiVersion": "2015-06-15",
         "vNetApiVersion": "2015-06-15",
@@ -471,8 +471,47 @@
                     "extensionProfile": {
                         "extensions": [
                             {
+                                "name": "[concat(parameters('vmNodeType0Name'),'_CustomScript')]",
+                                "properties": {
+                                    "publisher": "Microsoft.Azure.Extensions",
+                                    "type": "CustomScript",
+                                    "typeHandlerVersion": "2.0",
+                                    "autoUpgradeMinorVersion": true,
+                                    "settings": {
+                                        "skipDos2Unix": false,
+                                        "timestamp": 20190519,
+                                        "commandToExecute": "add-apt-repository -y ppa:ethereum/ethereum && apt-get -y update && apt-get install -y ethereum"
+                                    },
+                                    "protectedSettings": {}
+                                }
+                            },
+                            {
+                                "name": "[concat('VMDiagnosticsVmExt','_vmNodeType0Name')]",
+                                "properties": {
+                                    "provisionAfterExtensions": [
+                                        "[concat(parameters('vmNodeType0Name'),'_CustomScript')]"
+                                    ],
+                                    "type": "LinuxDiagnostic",
+                                    "autoUpgradeMinorVersion": true,
+                                    "protectedSettings": {
+                                        "storageAccountName": "[parameters('applicationDiagnosticsStorageAccountName')]",
+                                        "storageAccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('applicationDiagnosticsStorageAccountName')),'2015-05-01-preview').key1]",
+                                        "storageAccountEndPoint": "https://core.windows.net/"
+                                    },
+                                    "publisher": "Microsoft.OSTCExtensions",
+                                    "settings": {
+                                        "xmlCfg": "[base64(concat(variables('wadcfgxstart'),variables('wadmetricsresourceid0'),variables('wadcfgxend')))]",
+                                        "StorageAccount": "[parameters('applicationDiagnosticsStorageAccountName')]"
+                                    },
+                                    "typeHandlerVersion": "2.3"
+                                }
+                            },
+                            {
                                 "name": "[concat(parameters('vmNodeType0Name'),'_ServiceFabricLinuxNode')]",
                                 "properties": {
+                                    "provisionAfterExtensions": [
+                                        "[concat('VMDiagnosticsVmExt','_vmNodeType0Name')]"
+                                    ],
                                     "type": "ServiceFabricLinuxNode",
                                     "autoUpgradeMinorVersion": true,
                                     "protectedSettings": {
@@ -492,39 +531,6 @@
                                         }
                                     },
                                     "typeHandlerVersion": "1.1"
-                                }
-                            },
-                            {
-                                "name": "[concat('VMDiagnosticsVmExt','_vmNodeType0Name')]",
-                                "properties": {
-                                    "type": "LinuxDiagnostic",
-                                    "autoUpgradeMinorVersion": true,
-                                    "protectedSettings": {
-                                        "storageAccountName": "[parameters('applicationDiagnosticsStorageAccountName')]",
-                                        "storageAccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('applicationDiagnosticsStorageAccountName')),'2015-05-01-preview').key1]",
-                                        "storageAccountEndPoint": "https://core.windows.net/"
-                                    },
-                                    "publisher": "Microsoft.OSTCExtensions",
-                                    "settings": {
-                                        "xmlCfg": "[base64(concat(variables('wadcfgxstart'),variables('wadmetricsresourceid0'),variables('wadcfgxend')))]",
-                                        "StorageAccount": "[parameters('applicationDiagnosticsStorageAccountName')]"
-                                    },
-                                    "typeHandlerVersion": "2.3"
-                                }
-                            },
-                            {
-                                "name": "[concat(parameters('vmNodeType0Name'),'_CustomScript')]",
-                                "properties": {
-                                    "publisher": "Microsoft.Azure.Extensions",
-                                    "type": "CustomScript",
-                                    "typeHandlerVersion": "2.0",
-                                    "autoUpgradeMinorVersion": true,
-                                    "settings": {
-                                        "skipDos2Unix": false,
-                                        "timestamp": 20190519,
-                                        "commandToExecute": "add-apt-repository -y ppa:ethereum/ethereum && apt-get -y update && apt-get install -y ethereum"
-                                    },
-                                    "protectedSettings": {}
                                 }
                             }
                         ]

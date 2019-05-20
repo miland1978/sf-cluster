@@ -19,7 +19,7 @@ Set-StrictMode -Version 3
 $ResourceGroupName = "$Name-rg"
 $KeyVaultName = "$Name-cfg"
 $ClusterAdminName = "cluster-admin"
-$ClusterAdminPwd = GeneratePassword 16 2
+$ClusterAdminPwd = GeneratePassword 12 0
 
 CheckLoggedIn
 EnsureResourceGroup $ResourceGroupName $Location
