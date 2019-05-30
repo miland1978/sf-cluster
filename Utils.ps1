@@ -45,7 +45,7 @@ function EnsureCertificateCreated([string]$CertName) {
     }
     else {
         Write-Host "Creating new self-signed certificate..."
-        $password = GeneratePassword 16 2
+        $password = GeneratePassword 12 0
         $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
         $cert = New-SelfSignedCertificate -DnsName $CertName -CertStoreLocation cert:\CurrentUser\My -KeySpec KeyExchange
         $thumbprint = $cert.Thumbprint

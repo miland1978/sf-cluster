@@ -4,7 +4,7 @@
     "parameters": {
         "clusterLocation": {
             "type": "string",
-            "defaultValue": "westus",
+            "defaultValue": "westeurope",
             "metadata": {
                 "description": "Location of the Cluster"
             }
@@ -49,26 +49,11 @@
             "defaultValue": "10.0.0.0/24"
         },
         "computeLocation": {
-            "type": "string"
-        },
-        "publicIPAddressName": {
             "type": "string",
-            "defaultValue": "PublicIP-VM"
-        },
-        "publicIPAddressType": {
-            "type": "string",
-            "allowedValues": [
-                "Dynamic"
-            ],
-            "defaultValue": "Dynamic"
-        },
-        "vmStorageAccountContainerName": {
-            "type": "string",
-            "defaultValue": "vhds"
+            "defaultValue": "westeurope"
         },
         "adminUserName": {
             "type": "string",
-            "defaultValue": "testadm",
             "metadata": {
                 "description": "Remote desktop user Id"
             }
@@ -93,14 +78,6 @@
         "nicName": {
             "type": "string",
             "defaultValue": "NIC"
-        },
-        "lbName": {
-            "type": "string",
-            "defaultValue": "LoadBalancer"
-        },
-        "lbIPName": {
-            "type": "string",
-            "defaultValue": "PublicIP-LB-FE"
         },
         "overProvision": {
             "type": "string",
@@ -239,18 +216,12 @@
         "vmNodeType0Size": {
             "type": "string",
             "defaultValue": "Standard_D2s_v3"
-        },
-        "_artifactsLocation": {
-            "type": "string"
-        },
-        "_artifactsLocationSasToken": {
-            "type": "securestring"
         }
     },
     "variables": {
-        // "customData": "[concat('#include\n', uri(parameters('_artifactsLocation'), concat('primary-node-config.yml', parameters('_artifactsLocationSasToken'))))]",
+        "lbName": "[concat(parameters('clusterName'),'-',parameters('vmNodeType0Name'),'-lb')]",
+        "lbipName": "[concat(parameters('clusterName'),'-',parameters('vmNodeType0Name'),'-lbip')]",
         "vmssApiVersion": "2019-03-01",
-        "sfrpApiVersion": "2018-02-01",
         "lbApiVersion": "2015-06-15",
         "vNetApiVersion": "2015-06-15",
         "storageApiVersion": "2016-01-01",
@@ -262,13 +233,13 @@
         "wadperfcounters2": "<PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\BytesPerSecond\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk total bytes\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\ReadBytesPerSecond\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk read guest OS\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\WriteBytesPerSecond\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk write guest OS\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\TransfersPerSecond\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk transfers\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\ReadsPerSecond\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk reads\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\WritesPerSecond\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk writes\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageReadTime\" sampleRate=\"PT15S\" unit=\"Seconds\"><annotation displayName=\"Disk read time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageWriteTime\" sampleRate=\"PT15S\" unit=\"Seconds\"><annotation displayName=\"Disk write time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageTransferTime\" sampleRate=\"PT15S\" unit=\"Seconds\"><annotation displayName=\"Disk transfer time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageDiskQueueLength\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Disk queue length\" locale=\"en-us\"/></PerformanceCounterConfiguration></PerformanceCounters>",
         "wadcfgxstart": "[concat(variables('wadlogs'),variables('wadperfcounters1'),variables('wadperfcounters2'),'<Metrics resourceId=\"')]",
         "wadcfgxend": "[concat('\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>')]",
-        "lbID0": "[resourceId('Microsoft.Network/loadBalancers', concat('LB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
+        "lbID0": "[resourceId('Microsoft.Network/loadBalancers', variables('lbName'))]",
         "lbIPConfig0": "[concat(variables('lbID0'),'/frontendIPConfigurations/LoadBalancerIPConfig')]",
         "lbPoolID0": "[concat(variables('lbID0'),'/backendAddressPools/LoadBalancerBEAddressPool')]",
         "lbProbeID0": "[concat(variables('lbID0'),'/probes/FabricGatewayProbe')]",
         "lbHttpProbeID0": "[concat(variables('lbID0'),'/probes/FabricHttpGatewayProbe')]",
         "lbNatPoolID0": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]",
-        "vmStorageAccountName0": "[toLower(concat(uniqueString(resourceGroup().id), '1', '0' ))]",
+        "lbNatPoolID0_GethRDP": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool_GethRDP')]",
         "wadmetricsresourceid0": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name ,'/providers/','Microsoft.Compute/virtualMachineScaleSets/', parameters('vmNodeType0Name'))]"
     },
     "resources": [
@@ -333,7 +304,7 @@
         {
             "apiVersion": "[variables('publicIPApiVersion')]",
             "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[concat(parameters('lbIPName'),'-',parameters('vmNodeType0Name'))]",
+            "name": "[variables('lbipName')]",
             "location": "[parameters('computeLocation')]",
             "properties": {
                 "dnsSettings": {
@@ -349,10 +320,10 @@
         {
             "apiVersion": "[variables('lbApiVersion')]",
             "type": "Microsoft.Network/loadBalancers",
-            "name": "[concat('LB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name'))]",
+            "name": "[variables('lbName')]",
             "location": "[parameters('computeLocation')]",
             "dependsOn": [
-                "[concat('Microsoft.Network/publicIPAddresses/',concat(parameters('lbIPName'),'-',parameters('vmNodeType0Name')))]"
+                "[concat('Microsoft.Network/publicIPAddresses/',variables('lbipName'))]"
             ],
             "properties": {
                 "frontendIPConfigurations": [
@@ -360,7 +331,7 @@
                         "name": "LoadBalancerIPConfig",
                         "properties": {
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('lbIPName'),'-',parameters('vmNodeType0Name')))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('lbipName'))]"
                             }
                         }
                     }
@@ -439,8 +410,20 @@
                             "frontendIPConfiguration": {
                                 "id": "[variables('lbIPConfig0')]"
                             },
-                            "frontendPortRangeEnd": "4500",
-                            "frontendPortRangeStart": "3389",
+                            "frontendPortRangeEnd": "3599",
+                            "frontendPortRangeStart": "3500",
+                            "protocol": "tcp"
+                        }
+                    },
+                    {
+                        "name": "LoadBalancerBEAddressNatPool_GethRDP",
+                        "properties": {
+                            "backendPort": "8555",
+                            "frontendIPConfiguration": {
+                                "id": "[variables('lbIPConfig0')]"
+                            },
+                            "frontendPortRangeEnd": "3699",
+                            "frontendPortRangeStart": "3600",
                             "protocol": "tcp"
                         }
                     }
@@ -458,7 +441,7 @@
             "location": "[parameters('computeLocation')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
-                "[concat('Microsoft.Network/loadBalancers/', concat('LB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
+                "[concat('Microsoft.Network/loadBalancers/', variables('lbName'))]",
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('supportLogStorageAccountName'))]",
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('applicationDiagnosticsStorageAccountName'))]"
             ],
@@ -471,7 +454,7 @@
                     "extensionProfile": {
                         "extensions": [
                             {
-                                "name": "[concat(parameters('vmNodeType0Name'),'_CustomScript')]",
+                                "name": "[concat(parameters('vmNodeType0Name'),'_EthereumSetup')]",
                                 "properties": {
                                     "publisher": "Microsoft.Azure.Extensions",
                                     "type": "CustomScript",
@@ -480,7 +463,7 @@
                                     "settings": {
                                         "skipDos2Unix": false,
                                         "timestamp": 20190519,
-                                        "commandToExecute": "add-apt-repository -y ppa:ethereum/ethereum && apt-get -y update && apt-get install -y ethereum"
+                                        "commandToExecute": "sleep 60 && add-apt-repository -y ppa:ethereum/ethereum && apt-get -y update && apt-get install -y ethereum"
                                     },
                                     "protectedSettings": {}
                                 }
@@ -489,7 +472,7 @@
                                 "name": "[concat('VMDiagnosticsVmExt','_vmNodeType0Name')]",
                                 "properties": {
                                     "provisionAfterExtensions": [
-                                        "[concat(parameters('vmNodeType0Name'),'_CustomScript')]"
+                                        "[concat(parameters('vmNodeType0Name'),'_EthereumSetup')]"
                                     ],
                                     "type": "LinuxDiagnostic",
                                     "autoUpgradeMinorVersion": true,
@@ -552,6 +535,9 @@
                                                 "loadBalancerInboundNatPools": [
                                                     {
                                                         "id": "[variables('lbNatPoolID0')]"
+                                                    },
+                                                    {
+                                                        "id": "[variables('lbNatPoolID0_GethRDP')]"
                                                     }
                                                 ],
                                                 "subnet": {
@@ -568,7 +554,6 @@
                     "osProfile": {
                         "adminPassword": "[parameters('adminPassword')]",
                         "adminUsername": "[parameters('adminUsername')]",
-                        //"customData": "[base64(variables('customData'))]",
                         "computernamePrefix": "[parameters('vmNodeType0Name')]",
                         "secrets": [
                             {
@@ -647,7 +632,7 @@
                         "name": "Security"
                     }
                 ],
-                "managementEndpoint": "[concat('https://',reference(concat(parameters('lbIPName'),'-',parameters('vmNodeType0Name'))).dnsSettings.fqdn,':',parameters('nt0fabricHttpGatewayPort'))]",
+                "managementEndpoint": "[concat('https://',reference(variables('lbipName')).dnsSettings.fqdn,':',parameters('nt0fabricHttpGatewayPort'))]",
                 "nodeTypes": [
                     {
                         "name": "[parameters('vmNodeType0Name')]",

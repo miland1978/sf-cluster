@@ -1,3 +1,6 @@
 *.pfx
 *.pwd.txt
 *.thumb.txt
+.vs/
+bin/
+*.user

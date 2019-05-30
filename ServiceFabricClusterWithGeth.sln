@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "BronzeCluster", "BronzeCluster.deployproj", "{59B7F1D5-9257-4CE2-93D5-99376E3174EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{21C7901A-F76D-4191-8BDA-7DBEA4B77BD1}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{D9D6721E-CDC2-4CA2-9735-2458AB307C5E}"
+	ProjectSection(SolutionItems) = preProject
+		CreateAndImportCertificate.ps1 = CreateAndImportCertificate.ps1
+		Utils.ps1 = Utils.ps1
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59B7F1D5-9257-4CE2-93D5-99376E3174EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59B7F1D5-9257-4CE2-93D5-99376E3174EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59B7F1D5-9257-4CE2-93D5-99376E3174EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59B7F1D5-9257-4CE2-93D5-99376E3174EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CE04DE1-68A5-4FF1-9F8D-21F238FBBC64}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "value": "dltech-cluster"
+    },
+    "adminUserName": {
+      "value": "dltech-admin"
+    },
+    "nicName": {
+      "value": "dltech-cluster-nic"
+    },
+    "dnsName": {
+      "value": "dltech-cluster"
+    },
+    "virtualNetworkName": {
+      "value": "dltech-cluster-vnet"
+    },
+    "sourceVaultValue": {
+      "value": "/subscriptions/78b33cf7-b136-4967-acb1-53d1158777cc/resourceGroups/dltech-cluster-rg/providers/Microsoft.KeyVault/vaults/dltech-cluster-cfg"
+    },
+    "certificateUrlValue": {
+      "value": "https://dltech-cluster-cfg.vault.azure.net:443/secrets/dltech-cluster/b1b0a8c7ac1640a3b0d73d44fb2180c6"
+    },
+    "certificateThumbprint": {
+      "value": "CE3E35B3FC992A18E6FED3D511F3B8BD897CE25D"
+    }
+  }
+}
