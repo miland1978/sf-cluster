@@ -7,3 +7,5 @@ bin/
 packages/
 obj/
 pkg/
+node_modules/
+build/
