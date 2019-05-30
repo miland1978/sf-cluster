@@ -4,3 +4,6 @@
 .vs/
 bin/
 *.user
+packages/
+obj/
+pkg/
