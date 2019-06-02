@@ -17,7 +17,7 @@ using Xunit;
 
 namespace DLTech.EthereumTests
 {
-	public class EthereumClientIntegrationTests
+	public class EthereumMintThroughputTests
 	{
 		private const string NodeUrl0 = "http://40.118.124.167:3600";
 		private const string NodeUrl1 = "http://40.118.124.167:3601";
@@ -29,7 +29,7 @@ namespace DLTech.EthereumTests
 		private readonly IClient _client1;
 		private readonly IClient _client2;
 
-		public EthereumClientIntegrationTests()
+		public EthereumMintThroughputTests()
 		{
 			_client0 = new RpcClient(new Uri(NodeUrl0));
 			_client1 = new RpcClient(new Uri(NodeUrl1));
