@@ -32,8 +32,86 @@
     <Content Include="..\artifacts\bootnode\**\*.*">
       <Link>ApplicationPackageRoot\BootnodePkg\Code\%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Content>
-    <Content Include="..\artifacts\geth\**\*.*">
-      <Link>ApplicationPackageRoot\GethPkg\Code\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    <Content Include="..\artifacts\geth\bootnodes.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\bootnodes.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n3\primary000000\address.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n3\primary000000\address.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n3\primary000000\keystore\UTC--2019-05-30T18-05-57.581795364Z--680531448e813df0e72d2826930861a18ddde39b">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n3\primary000000\keystore\UTC--2019-05-30T18-05-57.581795364Z--680531448e813df0e72d2826930861a18ddde39b</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n3\primary000001\address.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n3\primary000001\address.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n3\primary000001\keystore\UTC--2019-05-30T18-06-55.643529658Z--6f8e2074bc366705675bcff4c2b92d3392b1c1f0">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n3\primary000001\keystore\UTC--2019-05-30T18-06-55.643529658Z--6f8e2074bc366705675bcff4c2b92d3392b1c1f0</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n3\primary000002\address.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n3\primary000002\address.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n3\primary000002\keystore\UTC--2019-05-30T18-07-41.132145183Z--ff5459b4245c324aa02bb734c34197c42e29f7c2">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n3\primary000002\keystore\UTC--2019-05-30T18-07-41.132145183Z--ff5459b4245c324aa02bb734c34197c42e29f7c2</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n3\testnet.json">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n3\testnet.json</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\primary000000\address.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\primary000000\address.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\primary000000\keystore\UTC--2019-05-30T18-08-25.531971776Z--680531448e813df0e72d2826930861a18ddde39b">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\primary000000\keystore\UTC--2019-05-30T18-08-25.531971776Z--680531448e813df0e72d2826930861a18ddde39b</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\primary000001\address.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\primary000001\address.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\primary000001\keystore\UTC--2019-05-30T18-08-48.491823290Z--6f8e2074bc366705675bcff4c2b92d3392b1c1f0">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\primary000001\keystore\UTC--2019-05-30T18-08-48.491823290Z--6f8e2074bc366705675bcff4c2b92d3392b1c1f0</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\primary000002\address.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\primary000002\address.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\primary000002\keystore\UTC--2019-05-30T18-09-05.596571310Z--ff5459b4245c324aa02bb734c34197c42e29f7c2">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\primary000002\keystore\UTC--2019-05-30T18-09-05.596571310Z--ff5459b4245c324aa02bb734c34197c42e29f7c2</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\primary000003\address.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\primary000003\address.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\primary000003\keystore\UTC--2019-05-30T18-09-26.351920802Z--69933d803ad99dffaa259be38a3c813a19d39ca4">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\primary000003\keystore\UTC--2019-05-30T18-09-26.351920802Z--69933d803ad99dffaa259be38a3c813a19d39ca4</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\primary000004\address.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\primary000004\address.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\primary000004\keystore\UTC--2019-05-30T18-10-04.782368414Z--ba4e84bce8ceced8428af088730027f03b6dfefb">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\primary000004\keystore\UTC--2019-05-30T18-10-04.782368414Z--ba4e84bce8ceced8428af088730027f03b6dfefb</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\n5\testnet.json">
+      <Link>ApplicationPackageRoot\GethPkg\Code\n5\testnet.json</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\passphrase.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\passphrase.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\primary000000.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\primary000000.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\primary000001.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\primary000001.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\primary000002.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\primary000002.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\primary000003.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\primary000003.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\primary000004.txt">
+      <Link>ApplicationPackageRoot\GethPkg\Code\primary000004.txt</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\start_geth3.sh">
+      <Link>ApplicationPackageRoot\GethPkg\Code\start_geth3.sh</Link>
+    </Content>
+    <Content Include="..\artifacts\geth\start_geth5.sh">
+      <Link>ApplicationPackageRoot\GethPkg\Code\start_geth5.sh</Link>
     </Content>
     <Content Include="ApplicationPackageRoot\BootnodePkg\Config\Settings.xml" />
     <Content Include="ApplicationPackageRoot\BootnodePkg\ServiceManifest.xml" />

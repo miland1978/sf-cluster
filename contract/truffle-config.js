@@ -18,7 +18,7 @@
  *
  */
 
-// const HDWalletProvider = require('truffle-hdwallet-provider');
+const HDWalletProvider = require('truffle-hdwallet-provider');
 // const infuraKey = "fj4jll3k.....";
 //
 // const fs = require('fs');
@@ -46,7 +46,7 @@ module.exports = {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
-    }
+    },
 
     // Another network with more advanced options...
     // advanced: {
@@ -70,11 +70,18 @@ module.exports = {
     // },
 
     // Useful for private networks
-    // private: {
-    // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
-    // network_id: 2111,   // This network is yours, in the cloud.
-    // production: true    // Treats this network as if it was a public net. (default: false)
-    // }
+    private: {
+      host: "40.118.124.167",
+      port: 3600,
+      network_id: 1999,
+      //from: "680531448E813df0e72D2826930861a18dDde39b",
+      from: "6F8E2074bc366705675bCfF4c2B92D3392b1c1f0",
+      //216ab7306b67c04cf1d04951c95afbd16756101cfa0a1f9569eca38672714fae
+      //provider: () => new HDWalletProvider("63233e5ba92fff0fad5eb8b8e5c462c3eb584d826f88d597d8863c125dee9364", "http://40.118.124.167:3600"),
+      provider: () => new HDWalletProvider("216ab7306b67c04cf1d04951c95afbd16756101cfa0a1f9569eca38672714fae", "http://40.118.124.167:3600"),
+      gas: 4700000
+      // production: true    // Treats this network as if it was a public net. (default: false)
+    }
   },
 
   // Set default mocha options here, use special reporters etc.

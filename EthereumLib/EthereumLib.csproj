@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>dltech.ethereumlib</AssemblyName>
+    <RootNamespace>DLTech.EthereumLib</RootNamespace>
+    <Copyright>© 2019 DI Miliy Andrew</Copyright>
+    <Authors>Andrew Miliy</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nethereum.Web3" Version="3.3.0" />
+  </ItemGroup>
+
+</Project>

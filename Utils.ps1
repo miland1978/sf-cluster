@@ -1,3 +1,6 @@
+# Copyright 2019 DI Miliy Andrew. All Rights Reserved.
+# SPDX-License-Identifier: MIT
+
 $systemWeb = [Reflection.Assembly]::LoadWithPartialName("System.Web")
 
 function CheckLoggedIn() {

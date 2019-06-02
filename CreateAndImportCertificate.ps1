@@ -1,5 +1,8 @@
 #Requires -Version 3.0
 
+# Copyright 2019 DI Miliy Andrew. All Rights Reserved.
+# SPDX-License-Identifier: MIT
+
 Param (
     [string][Parameter(Mandatory = $true)] $ClusterName,
     [string] $Location = "westeurope"
